@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public class personRepository {
     private static List<Person> tempList;
+    private static Long id = 1L;
 
 
     public static class AddLists {
@@ -38,8 +39,11 @@ public class personRepository {
 
                 System.out.println("Não tem");
 
+
+                _person.setId(id ++);
+
                 tempList.add(_person);
-                
+
                 DbList.getDbList().setPersonList(tempList);
             }
 
