@@ -2,6 +2,7 @@ package br.com.springboot.UserAPi.dbInMemory;
 
 import br.com.springboot.UserAPi.model.Person;
 import br.com.springboot.UserAPi.model.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,33 +15,26 @@ import java.util.List;
 @Setter
 public class DbList {
 
-    @Getter
-    @Setter
-    public static class AllLists
-    {
-        public static List<Person> person;
+    private  List<Person> personList;
 
-        public static Long id = 0L;
+    private static  DbList dataList;
 
-        public static void ListPerson(Person _person){
-
-            try{
-
-                _person.setId(id++);
-
-                person.add(_person);
-            }
-
-            catch (NullPointerException e){
-
-                _person.setId(id++);
-
-                person = new ArrayList<>();
-
-                person.add(_person);
-            }
+    public static DbList getDbList(){
+        if(dataList == null){
+            dataList = new DbList();
         }
+
+        return dataList;
     }
+
+
+//
+//
+//        public static List<User> user;
+//
+//        public static Long idPerson = 0L;
+//
+//        public static Long idUser = 0L;
 }
 
 
