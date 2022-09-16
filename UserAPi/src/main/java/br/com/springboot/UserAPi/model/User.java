@@ -14,8 +14,5 @@ public class User {
 
     private String Email;
 
-    private String PassWord;
-
-    private Boolean Administration;
-
+    private String passWord;
 }
