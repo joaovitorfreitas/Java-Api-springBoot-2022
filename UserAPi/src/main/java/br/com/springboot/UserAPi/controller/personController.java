@@ -13,6 +13,8 @@ import java.util.List;
 @RequestMapping("/users")
     public class personController {
 
+    private static List<User> ttt =  new ArrayList<>();
+
     @GetMapping("/listPerson")
         public List<Person> getPerson(){
 
@@ -26,7 +28,6 @@ import java.util.List;
 
             return person;
         }
-
 
 
     }

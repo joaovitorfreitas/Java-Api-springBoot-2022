@@ -11,14 +11,17 @@ import java.util.Optional;
 public class personRepository {
     private static List<Person> tempList;
 
+
     public static class AddLists {
 
-//        public static Boolean checkCpf(String cpf){
-//
-//           Optional<Person> personCpf =  DbList.AllLists.person.stream().filter(person -> person.getCpf() == cpf).findFirst();
-//
-//           return personCpf.isPresent();
-//        }
+
+        public static Boolean checkCpf(String cpf){
+
+            for(int i = 0; i < tempList.size(); i++){
+                    return tempList.get(i).getCpf().contains(cpf);
+                }
+            return Boolean.FALSE;
+        }
 
         public static void AddListPerson(Person _person) {
 
@@ -29,12 +32,24 @@ public class personRepository {
                 DbList.getDbList().setPersonList(new ArrayList<>());
             }
 
-            tempList.add(_person);
+            if(checkCpf("666.623.480-37")){
+                System.out.println("Já tem");
+            }else{
 
-            DbList.getDbList().setPersonList(tempList);
+                System.out.println("Não tem");
+
+                tempList.add(_person);
+                
+                DbList.getDbList().setPersonList(tempList);
+            }
+
+
         }
 
     }
+
+
+
 }
 
 

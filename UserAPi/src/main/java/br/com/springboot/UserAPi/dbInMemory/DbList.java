@@ -16,6 +16,9 @@ import java.util.List;
 public class DbList {
 
     private  List<Person> personList;
+    public static Long idPerson = 0L;
+
+//        public static Long idUser = 0L;
 
     private static  DbList dataList;
 
@@ -28,13 +31,11 @@ public class DbList {
     }
 
 
-//
-//
+
+
 //        public static List<User> user;
 //
-//        public static Long idPerson = 0L;
-//
-//        public static Long idUser = 0L;
+
 }
 
 
