@@ -35,8 +35,6 @@ public class personRepository {
     }
 
     //Metodos
-
-
     private void checkNullList(){
         if(tempList == null){
             tempList = new ArrayList<>();
@@ -92,7 +90,7 @@ public class personRepository {
             return tempList.stream().filter(person -> person.getName().equalsIgnoreCase(name));
         }
 
-        return null;
+        return tempList.stream().filter(person -> person.getName().equalsIgnoreCase(name));
     }
 
 
@@ -104,7 +102,7 @@ public class personRepository {
             return tempList.stream().filter(person -> person.getCpf().contains(cpf));
         }
 
-        return null;
+        return tempList.stream().filter(person -> person.getCpf().contains(cpf));
     }
 
     public Optional<Person> findbyId(int id) {
