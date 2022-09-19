@@ -53,6 +53,11 @@ public class personRepository {
             for(int i = 0; i < tempList.size(); i++){
 
                 if(tempList.get(i).getId() == idFind){
+
+                    tempList.removeIf(person -> person.getId() == idFind);
+
+                    DbList.getDbList().setPersonList(tempList);
+
                     return Boolean.TRUE;
                 }
             }
