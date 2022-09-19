@@ -34,8 +34,17 @@ public class personRepository {
         return _person;
     }
 
-
     //Metodos
+
+
+    private void checkNullList(){
+        if(tempList == null){
+            tempList = new ArrayList<>();
+        }
+    }
+
+
+
     private Boolean checkCpf(String cpf) {
 
         if (tempList.stream().filter(person -> person.getCpf().equals(cpf)).count() == 1) {
@@ -46,6 +55,8 @@ public class personRepository {
     }
 
     public Person AddListPerson(Person _person) {
+
+        checkNullList();
 
         if (tempList == null) {
 
@@ -66,6 +77,7 @@ public class personRepository {
     }
 
     public boolean RemoveList(Integer idFind) {
+        checkNullList();
 
         return tempList.removeIf(person -> person.getId() == idFind);
 
@@ -73,6 +85,8 @@ public class personRepository {
 
 
     public Stream<Person> findByName(String name) {
+
+        checkNullList();
 
         if (tempList.stream().filter(person -> person.getName().equalsIgnoreCase(name)).count() == 1) {
             return tempList.stream().filter(person -> person.getName().equalsIgnoreCase(name));
@@ -84,6 +98,8 @@ public class personRepository {
 
     public Stream<Person> findByCpf(String cpf) {
 
+        checkNullList();
+
         if (tempList.stream().filter(person -> person.getCpf().contains(cpf)).count() == 1) {
             return tempList.stream().filter(person -> person.getCpf().contains(cpf));
         }
@@ -93,11 +109,15 @@ public class personRepository {
 
     public Optional<Person> findbyId(int id) {
 
+        checkNullList();
+
         return tempList.stream().filter(person -> person.getId() == id).findFirst();
 
     }
 
     public Person updatePerson(Person _person, int id) {
+
+        checkNullList();
 
         if (findbyId(id) == null) {
             return null;
@@ -108,7 +128,7 @@ public class personRepository {
         }
 
         else if (findbyId(id).get().getId() != _person.getId()) {
-            throw new IllegalArgumentException("Id não valido");
+            throw new IllegalArgumentException("Id não no corpo não valido");
         }
 
         findbyId(id).get().setNumberHome(_person.getNumberHome());

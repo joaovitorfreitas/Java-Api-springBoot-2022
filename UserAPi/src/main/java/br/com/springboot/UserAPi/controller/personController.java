@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Stream;
 
@@ -72,8 +73,27 @@ public class personController {
     }
 
     @PutMapping("putPerson/{id}")
-    public Person putPerson(@PathVariable int id, @RequestBody Person _person) {
-        return personRepository.getPersonRepository().updatePerson(_person, id);
+    public ResponseEntity putPerson(@PathVariable int id, @RequestBody Person _person, Error erro) {
+
+        try {
+            personRepository.getPersonRepository().updatePerson(_person, id);
+
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+
+        } catch (NoSuchElementException nullMsg) {
+
+            erro.setStatus("Id não na url não encontrada");
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+
+        } catch (IllegalArgumentException msg){
+
+            erro.setStatus(msg.getMessage());
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+        }
+
+
     }
 
 }
