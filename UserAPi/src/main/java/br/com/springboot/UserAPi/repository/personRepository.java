@@ -6,6 +6,7 @@ import br.com.springboot.UserAPi.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 public class personRepository {
@@ -19,8 +20,10 @@ public class personRepository {
 
             for(int i = 0; i < tempList.size(); i++){
 
-                if(tempList.get(i).getCpf() == cpf)
-                    return tempList.get(i).getCpf().contains(cpf);
+                if(Objects.equals(tempList.get(i).getCpf(), cpf)){
+                    return Boolean.TRUE;
+
+                }
 
                 }
 
@@ -79,6 +82,32 @@ public class personRepository {
                 if(tempList.get(i).getName().equalsIgnoreCase(name)){
 
                     _person.setName(tempList.get(i).getName());
+                    _person.setId(tempList.get(i).getId());
+                    _person.setNumberHome(tempList.get(i).getNumberHome());
+                    _person.setComplement(tempList.get(i).getComplement());
+                    _person.setDistrict(tempList.get(i).getDistrict());
+                    _person.setCpf(tempList.get(i).getCpf());
+                    _person.setCounty(tempList.get(i).getCounty());
+                    _person.setUf(tempList.get(i).getUf());
+                    _person.setStreet(tempList.get(i).getStreet());
+                    _person.setRg(tempList.get(i).getRg());
+
+                    return _person;
+                }
+
+            }
+
+            return _person;
+        }
+
+        public static Person findByCpf(String cpf) {
+
+            Person  _person =  new Person();
+
+            for(int i = 0; i < tempList.size(); i++){
+
+                if(tempList.get(i).getCpf().equalsIgnoreCase(cpf)){
+
                     _person.setId(tempList.get(i).getId());
                     _person.setNumberHome(tempList.get(i).getNumberHome());
                     _person.setComplement(tempList.get(i).getComplement());

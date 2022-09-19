@@ -43,4 +43,10 @@ import java.util.List;
         return personRepository.AddLists.findByName(name);
         }
 
+    @GetMapping("findPersoncpf/{cpf}")
+    public static Person findPersoncpf(@PathVariable String cpf){
+
+        return personRepository.AddLists.findByCpf(cpf);
+    }
+
     }
