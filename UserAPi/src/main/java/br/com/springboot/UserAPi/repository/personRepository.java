@@ -16,8 +16,8 @@ import java.util.stream.Stream;
 @Getter
 @NoArgsConstructor
 public class personRepository {
-    private  List<Person> tempList;
-    private  Integer id = 1;
+    private List<Person> tempList;
+    private Integer id = 1;
 
 
     //Lista
@@ -25,9 +25,9 @@ public class personRepository {
 
 
     // Sigleton
-    public static personRepository getPersonRepository(){
+    public static personRepository getPersonRepository() {
 
-        if(_person == null){
+        if (_person == null) {
 
             _person = new personRepository();
         }
@@ -37,111 +37,100 @@ public class personRepository {
 
 
     //Metodos
-        private  Boolean checkCpf(String cpf) {
+    private Boolean checkCpf(String cpf) {
 
-            for (int i = 0; i < tempList.size(); i++) {
-
-                if (tempList.get(i).getCpf().equals(cpf)) {
-                    return Boolean.TRUE;
-                }
-            }
-
-            return Boolean.FALSE;
+        if (tempList.stream().filter(person -> person.getCpf().equals(cpf)).count() == 1) {
+            return true;
         }
 
-        public  Person AddListPerson(Person _person) {
+        return false;
+    }
 
-            if (tempList == null) {
+    public Person AddListPerson(Person _person) {
 
-                tempList = new ArrayList<>();
+        if (tempList == null) {
 
-                DbList.getDbList().setPersonList(new ArrayList<>());
-            }
-
-            if (checkCpf(_person.getCpf())) {
-
-                System.out.println("Já tem");
-
-                return  null;
-            }
-
-                _person.setId(id++);
-
-                tempList.add(_person);
-
-                DbList.getDbList().setPersonList(tempList);
-
-                return _person;
-
+            tempList = new ArrayList<>();
         }
 
-        public  boolean RemoveList(Integer idFind) {
-
-            for (int i = 0; i < tempList.size(); i++) {
-
-                if (tempList.get(i).getId() == idFind) {
-
-                    tempList.removeIf(person -> person.getId() == idFind);
-
-                    return Boolean.TRUE;
-                }
-            }
-
-            return Boolean.FALSE;
-        }
-
-
-        public  Stream<Person> findByName(String name) {
-
-            if(tempList.stream().filter(person -> person.getName().equalsIgnoreCase(name)).count() == 1){
-                return tempList.stream().filter(person -> person.getName().equalsIgnoreCase(name));
-            }
+        if (checkCpf(_person.getCpf())) {
 
             return null;
         }
 
+        _person.setId(id++);
 
-        public  Stream<Person> findByCpf(String cpf) {
+        tempList.add(_person);
 
-            if(tempList.stream().filter(person -> person.getCpf().contains(cpf)).count() == 1){
-                return tempList.stream().filter(person -> person.getCpf().contains(cpf));
+        return _person;
+
+    }
+
+    public boolean RemoveList(Integer idFind) {
+
+        for (int i = 0; i < tempList.size(); i++) {
+
+            if (tempList.get(i).getId() == idFind) {
+
+                tempList.removeIf(person -> person.getId() == idFind);
+
+                return Boolean.TRUE;
             }
+        }
 
+        return Boolean.FALSE;
+    }
+
+
+    public Stream<Person> findByName(String name) {
+
+        if (tempList.stream().filter(person -> person.getName().equalsIgnoreCase(name)).count() == 1) {
+            return tempList.stream().filter(person -> person.getName().equalsIgnoreCase(name));
+        }
+
+        return null;
+    }
+
+
+    public Stream<Person> findByCpf(String cpf) {
+
+        if (tempList.stream().filter(person -> person.getCpf().contains(cpf)).count() == 1) {
+            return tempList.stream().filter(person -> person.getCpf().contains(cpf));
+        }
+
+        return null;
+    }
+
+    public Optional<Person> findbyId(int id) {
+
+        return tempList.stream().filter(person -> person.getId() == id).findFirst();
+
+    }
+
+    public Person updatePerson(Person _person, int id) {
+
+        if (findbyId(id) == null) {
             return null;
         }
 
-        public  Optional<Person> findbyId(int id) {
-
-           return tempList.stream().filter(person -> person.getId() == id).findFirst();
-
+        if (_person.getId() == null) {
+            _person.setId(findbyId(id).get().getId());
+        } else if (findbyId(id).get().getId() != _person.getId()) {
+            throw new IllegalArgumentException("Id não valido");
         }
 
-        public  Person updatePerson(Person _person, int id) {
+        findbyId(id).get().setNumberHome(_person.getNumberHome());
+        findbyId(id).get().setName(_person.getName());
+        findbyId(id).get().setStreet(_person.getStreet());
+        findbyId(id).get().setComplement(_person.getComplement());
+        findbyId(id).get().setRg(_person.getRg());
+        findbyId(id).get().setUf(_person.getUf());
+        findbyId(id).get().setDistrict(_person.getDistrict());
+        findbyId(id).get().setCounty(_person.getCounty());
+        findbyId(id).get().setCpf(_person.getCpf());
 
-            if(findbyId(id) == null){
-                return null;
-            }
-
-            if(_person.getId() == null){
-                _person.setId(findbyId(id).get().getId());
-            }
-
-            else if(findbyId(id).get().getId() != _person.getId()){
-                throw new IllegalArgumentException("Id não valido");
-            }
-
-            findbyId(id).get().setNumberHome(_person.getNumberHome());
-            findbyId(id).get().setName(_person.getName());
-            findbyId(id).get().setStreet(_person.getStreet());
-            findbyId(id).get().setComplement(_person.getComplement());
-            findbyId(id).get().setRg(_person.getRg());
-            findbyId(id).get().setUf(_person.getUf());
-            findbyId(id).get().setDistrict(_person.getDistrict());
-            findbyId(id).get().setCounty(_person.getCounty());
-            findbyId(id).get().setCpf(_person.getCpf());
-
-            return _person;
-        }
+        return _person;
+    }
 }
 
 
