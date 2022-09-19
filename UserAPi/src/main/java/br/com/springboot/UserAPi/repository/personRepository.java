@@ -22,10 +22,8 @@ public class personRepository {
 
                 if(Objects.equals(tempList.get(i).getCpf(), cpf)){
                     return Boolean.TRUE;
-
                 }
-
-                }
+            }
 
             return Boolean.FALSE;
         }

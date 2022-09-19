@@ -12,41 +12,41 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
-    public class personController {
+public class personController {
     @GetMapping("/listPerson")
-        public List<Person> getPerson(){
+    public List<Person> getPerson() {
 
-        return  DbList.getDbList().getPersonList();
-        }
+        return DbList.getDbList().getPersonList();
+    }
 
-        @PostMapping("/registerPerson")
-        public Person postPerson(@RequestBody Person person){
+    @PostMapping("/registerPerson")
+    public Person postPerson(@RequestBody Person person) {
 
-            personRepository.AddLists.AddListPerson(person);
+        personRepository.AddLists.AddListPerson(person);
 
-            return person;
-        }
+        return person;
+    }
 
-        @DeleteMapping("/removePerson/{id}")
-        public String removePerson(@PathVariable Integer id){
+    @DeleteMapping("/removePerson/{id}")
+    public String removePerson(@PathVariable Integer id) {
 
-        if(personRepository.AddLists.RemoveList(id)){
+        if (personRepository.AddLists.RemoveList(id)) {
             return "Ok";
         }
 
         return "Não Encontrado";
-        }
+    }
 
-        @GetMapping("findPerson/{name}")
-        public static Person findPerson(@PathVariable String name){
+    @GetMapping("findPerson/{name}")
+    public static Person findPerson(@PathVariable String name) {
 
         return personRepository.AddLists.findByName(name);
-        }
+    }
 
     @GetMapping("findPersoncpf/{cpf}")
-    public static Person findPersoncpf(@PathVariable String cpf){
+    public static Person findPersoncpf(@PathVariable String cpf) {
 
         return personRepository.AddLists.findByCpf(cpf);
     }
 
-    }
+}
