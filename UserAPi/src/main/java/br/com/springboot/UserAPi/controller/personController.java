@@ -52,9 +52,16 @@ public class personController {
         return personRepository.AddLists.findByCpf(cpf);
     }
     @GetMapping("findPersonid/{id}")
-    public static Optional<Person> findPersoncpf(@PathVariable int id) {
+    public static Optional<Person> findPersonid(@PathVariable int id) {
         return personRepository.AddLists.findbyId(id);
     }
+
+    @PutMapping("putPerson/{id}")
+    public static Person putPerson(@PathVariable int id, @RequestBody Person _person)
+    {
+        return personRepository.AddLists.updatePerson(_person, id);
+    }
+
 
 
 }

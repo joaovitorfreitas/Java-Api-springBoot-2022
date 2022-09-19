@@ -98,12 +98,27 @@ public class personRepository {
 
         public static Person updatePerson(Person _person, int id) {
 
-            for (int i = 0; i < tempList.size(); i++) {
-
-                if (tempList.get(i).getId() == id) {
-
-                }
+            if(findbyId(id) == null){
+                return null;
             }
+
+            if(_person.getId() == null){
+                _person.setId(findbyId(id).get().getId());
+            }
+
+            else if(findbyId(id).get().getId() != _person.getId()){
+                throw new IllegalArgumentException("Id não valido");
+            }
+
+            findbyId(id).get().setNumberHome(_person.getNumberHome());
+            findbyId(id).get().setName(_person.getName());
+            findbyId(id).get().setStreet(_person.getStreet());
+            findbyId(id).get().setComplement(_person.getComplement());
+            findbyId(id).get().setRg(_person.getRg());
+            findbyId(id).get().setUf(_person.getUf());
+            findbyId(id).get().setDistrict(_person.getDistrict());
+            findbyId(id).get().setCounty(_person.getCounty());
+            findbyId(id).get().setCpf(_person.getCpf());
 
             return _person;
         }
