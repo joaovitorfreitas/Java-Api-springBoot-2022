@@ -18,8 +18,12 @@ public class personRepository {
         private static Boolean checkCpf(String cpf){
 
             for(int i = 0; i < tempList.size(); i++){
+
+                if(tempList.get(i).getCpf() == cpf)
                     return tempList.get(i).getCpf().contains(cpf);
+
                 }
+
             return Boolean.FALSE;
         }
 
@@ -74,9 +78,6 @@ public class personRepository {
 
                 if(tempList.get(i).getName().equalsIgnoreCase(name)){
 
-
-
-
                     _person.setName(tempList.get(i).getName());
                     _person.setId(tempList.get(i).getId());
                     _person.setNumberHome(tempList.get(i).getNumberHome());
@@ -87,7 +88,6 @@ public class personRepository {
                     _person.setUf(tempList.get(i).getUf());
                     _person.setStreet(tempList.get(i).getStreet());
                     _person.setRg(tempList.get(i).getRg());
-
 
                     return _person;
                 }
