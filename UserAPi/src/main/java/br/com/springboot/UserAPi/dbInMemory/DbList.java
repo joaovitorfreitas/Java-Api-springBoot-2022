@@ -16,23 +16,14 @@ import java.util.List;
 public class DbList {
 
     private  List<Person> personList;
-
-    private static  DbList dataList;
+    private static DbList dataList;
 
     public static DbList getDbList(){
         if(dataList == null){
             dataList = new DbList();
         }
-
         return dataList;
     }
-
-
-
-
-//        public static List<User> user;
-//
-
 }
 
 

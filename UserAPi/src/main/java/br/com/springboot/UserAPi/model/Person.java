@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Person {
 
-    private Long id;
+    private Integer id;
 
     private String Cpf;
 

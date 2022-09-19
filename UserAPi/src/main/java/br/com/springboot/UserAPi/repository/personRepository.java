@@ -10,13 +10,12 @@ import java.util.Optional;
 
 public class personRepository {
     private static List<Person> tempList;
-    private static Long id = 1L;
-
+    private static Integer id = 1;
 
     public static class AddLists {
 
 
-        public static Boolean checkCpf(String cpf){
+        private static Boolean checkCpf(String cpf){
 
             for(int i = 0; i < tempList.size(); i++){
                     return tempList.get(i).getCpf().contains(cpf);
@@ -33,7 +32,8 @@ public class personRepository {
                 DbList.getDbList().setPersonList(new ArrayList<>());
             }
 
-            if(checkCpf("666.623.480-37")){
+            if(checkCpf(_person.getCpf())){
+
                 System.out.println("Já tem");
             }else{
 
@@ -46,14 +46,20 @@ public class personRepository {
 
                 DbList.getDbList().setPersonList(tempList);
             }
-
-
         }
 
+        public static boolean RemoveList(Integer idFind){
+
+            for(int i = 0; i < tempList.size(); i++){
+
+                if(tempList.get(i).getId() == idFind){
+                    return Boolean.TRUE;
+                }
+            }
+
+            return Boolean.FALSE;
+        }
     }
-
-
-
 }
 
 
