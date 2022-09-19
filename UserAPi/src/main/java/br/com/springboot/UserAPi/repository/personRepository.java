@@ -67,17 +67,8 @@ public class personRepository {
 
     public boolean RemoveList(Integer idFind) {
 
-        for (int i = 0; i < tempList.size(); i++) {
+        return tempList.removeIf(person -> person.getId() == idFind);
 
-            if (tempList.get(i).getId() == idFind) {
-
-                tempList.removeIf(person -> person.getId() == idFind);
-
-                return Boolean.TRUE;
-            }
-        }
-
-        return Boolean.FALSE;
     }
 
 

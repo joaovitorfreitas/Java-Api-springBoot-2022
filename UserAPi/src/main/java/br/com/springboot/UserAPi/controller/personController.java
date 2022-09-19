@@ -1,6 +1,5 @@
 package br.com.springboot.UserAPi.controller;
 
-import br.com.springboot.UserAPi.dbInMemory.DbList;
 import br.com.springboot.UserAPi.model.Error;
 import br.com.springboot.UserAPi.model.Person;
 import br.com.springboot.UserAPi.model.User;
@@ -41,13 +40,19 @@ public class personController {
     }
 
     @DeleteMapping("/removePerson/{id}")
-    public String removePerson(@PathVariable Integer id) {
+    public ResponseEntity removePerson(@PathVariable Integer id, Error _erro) {
 
-        if (personRepository.getPersonRepository().RemoveList(id)) {
-            return "Ok";
+        if (personRepository.getPersonRepository().RemoveList(id) != true) {
+
+            _erro.setStatus("Usuário buscado não encontrado");
+
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(_erro);
+
         }
 
-        return "Não Encontrado";
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+
+
     }
 
     @GetMapping("findPerson/{name}")
