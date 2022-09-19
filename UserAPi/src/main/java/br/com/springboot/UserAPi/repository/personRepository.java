@@ -1,6 +1,5 @@
 package br.com.springboot.UserAPi.repository;
 
-import br.com.springboot.UserAPi.dbInMemory.DbList;
 import br.com.springboot.UserAPi.model.Person;
 import br.com.springboot.UserAPi.model.User;
 import lombok.Getter;
@@ -115,7 +114,8 @@ public class personRepository {
 
         if (_person.getId() == null) {
             _person.setId(findbyId(id).get().getId());
-        } else if (findbyId(id).get().getId() != _person.getId()) {
+        }
+        else if (findbyId(id).get().getId() != _person.getId()) {
             throw new IllegalArgumentException("Id não valido");
         }
 

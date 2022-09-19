@@ -1,6 +1,7 @@
 package br.com.springboot.UserAPi.controller;
 
 import br.com.springboot.UserAPi.dbInMemory.DbList;
+import br.com.springboot.UserAPi.model.Error;
 import br.com.springboot.UserAPi.model.Person;
 import br.com.springboot.UserAPi.model.User;
 import br.com.springboot.UserAPi.repository.personRepository;
@@ -25,11 +26,14 @@ public class personController {
     }
 
     @PostMapping("/registerPerson")
-    public ResponseEntity postPerson(@RequestBody Person person) {
+    public ResponseEntity postPerson(@RequestBody Person person, Error _erro) {
 
 
-        if(personRepository.getPersonRepository().AddListPerson(person) == null){
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cpf já existente !");
+        if (personRepository.getPersonRepository().AddListPerson(person) == null) {
+
+            _erro.setStatus("Cpf ja existe");
+
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(_erro);
         }
 
 
@@ -56,6 +60,7 @@ public class personController {
     public Stream<Person> findPersoncpf(@PathVariable String cpf) {
         return personRepository.getPersonRepository().findByCpf(cpf);
     }
+
     @GetMapping("findPersonid/{id}")
     public Optional<Person> findPersonid(@PathVariable int id) {
         return personRepository.getPersonRepository().findbyId(id);
