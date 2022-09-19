@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 @RestController
@@ -50,5 +51,10 @@ public class personController {
     public static Stream<Person> findPersoncpf(@PathVariable String cpf) {
         return personRepository.AddLists.findByCpf(cpf);
     }
+    @GetMapping("findPersonid/{id}")
+    public static Optional<Person> findPersoncpf(@PathVariable int id) {
+        return personRepository.AddLists.findbyId(id);
+    }
+
 
 }

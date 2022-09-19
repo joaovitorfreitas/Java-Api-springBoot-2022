@@ -90,6 +90,12 @@ public class personRepository {
             return null;
         }
 
+        public static Optional<Person> findbyId(int id) {
+
+           return tempList.stream().filter(person -> person.getId() == id).findFirst();
+
+        }
+
         public static Person updatePerson(Person _person, int id) {
 
             for (int i = 0; i < tempList.size(); i++) {
@@ -101,8 +107,6 @@ public class personRepository {
 
             return _person;
         }
-
-
     }
 }
 
