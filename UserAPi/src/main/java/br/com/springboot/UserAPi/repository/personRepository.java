@@ -3,6 +3,8 @@ package br.com.springboot.UserAPi.repository;
 import br.com.springboot.UserAPi.dbInMemory.DbList;
 import br.com.springboot.UserAPi.model.Person;
 import br.com.springboot.UserAPi.model.User;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,14 +12,32 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Stream;
 
+
+@Getter
+@NoArgsConstructor
 public class personRepository {
-    private static List<Person> tempList;
-    private static Integer id = 1;
-
-    public static class AddLists {
+    private  List<Person> tempList;
+    private  Integer id = 1;
 
 
-        private static Boolean checkCpf(String cpf) {
+    //Lista
+    private static personRepository _person;
+
+
+    // Sigleton
+    public static personRepository getPersonRepository(){
+
+        if(_person == null){
+
+            _person = new personRepository();
+        }
+
+        return _person;
+    }
+
+
+    //Metodos
+        private  Boolean checkCpf(String cpf) {
 
             for (int i = 0; i < tempList.size(); i++) {
 
@@ -29,9 +49,9 @@ public class personRepository {
             return Boolean.FALSE;
         }
 
-        public static Person AddListPerson(Person _person) {
+        public  Person AddListPerson(Person _person) {
 
-            if (DbList.getDbList().getPersonList() == null && tempList == null) {
+            if (tempList == null) {
 
                 tempList = new ArrayList<>();
 
@@ -55,7 +75,7 @@ public class personRepository {
 
         }
 
-        public static boolean RemoveList(Integer idFind) {
+        public  boolean RemoveList(Integer idFind) {
 
             for (int i = 0; i < tempList.size(); i++) {
 
@@ -71,7 +91,7 @@ public class personRepository {
         }
 
 
-        public static Stream<Person> findByName(String name) {
+        public  Stream<Person> findByName(String name) {
 
             if(tempList.stream().filter(person -> person.getName().equalsIgnoreCase(name)).count() == 1){
                 return tempList.stream().filter(person -> person.getName().equalsIgnoreCase(name));
@@ -81,7 +101,7 @@ public class personRepository {
         }
 
 
-        public static Stream<Person> findByCpf(String cpf) {
+        public  Stream<Person> findByCpf(String cpf) {
 
             if(tempList.stream().filter(person -> person.getCpf().contains(cpf)).count() == 1){
                 return tempList.stream().filter(person -> person.getCpf().contains(cpf));
@@ -90,13 +110,13 @@ public class personRepository {
             return null;
         }
 
-        public static Optional<Person> findbyId(int id) {
+        public  Optional<Person> findbyId(int id) {
 
            return tempList.stream().filter(person -> person.getId() == id).findFirst();
 
         }
 
-        public static Person updatePerson(Person _person, int id) {
+        public  Person updatePerson(Person _person, int id) {
 
             if(findbyId(id) == null){
                 return null;
@@ -122,7 +142,6 @@ public class personRepository {
 
             return _person;
         }
-    }
 }
 
 

@@ -20,13 +20,13 @@ public class personController {
     @GetMapping("/listPerson")
     public List<Person> getPerson() {
 
-        return DbList.getDbList().getPersonList();
+        return personRepository.getPersonRepository().getTempList();
     }
 
     @PostMapping("/registerPerson")
     public ResponseEntity<Person> postPerson(@RequestBody Person person) {
 
-        personRepository.AddLists.AddListPerson(person);
+        personRepository.getPersonRepository().AddListPerson(person);
 
         return ResponseEntity.ok(person);
     }
@@ -34,7 +34,7 @@ public class personController {
     @DeleteMapping("/removePerson/{id}")
     public String removePerson(@PathVariable Integer id) {
 
-        if (personRepository.AddLists.RemoveList(id)) {
+        if (personRepository.getPersonRepository().RemoveList(id)) {
             return "Ok";
         }
 
@@ -42,26 +42,23 @@ public class personController {
     }
 
     @GetMapping("findPerson/{name}")
-    public static Stream<Person> findPerson(@PathVariable String name) {
+    public Stream<Person> findPerson(@PathVariable String name) {
 
-        return personRepository.AddLists.findByName(name);
+        return personRepository.getPersonRepository().findByName(name);
     }
 
     @GetMapping("findPersoncpf/{cpf}")
-    public static Stream<Person> findPersoncpf(@PathVariable String cpf) {
-        return personRepository.AddLists.findByCpf(cpf);
+    public Stream<Person> findPersoncpf(@PathVariable String cpf) {
+        return personRepository.getPersonRepository().findByCpf(cpf);
     }
     @GetMapping("findPersonid/{id}")
-    public static Optional<Person> findPersonid(@PathVariable int id) {
-        return personRepository.AddLists.findbyId(id);
+    public Optional<Person> findPersonid(@PathVariable int id) {
+        return personRepository.getPersonRepository().findbyId(id);
     }
 
     @PutMapping("putPerson/{id}")
-    public static Person putPerson(@PathVariable int id, @RequestBody Person _person)
-    {
-        return personRepository.AddLists.updatePerson(_person, id);
+    public Person putPerson(@PathVariable int id, @RequestBody Person _person) {
+        return personRepository.getPersonRepository().updatePerson(_person, id);
     }
-
-
 
 }
