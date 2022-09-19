@@ -5,6 +5,7 @@ import br.com.springboot.UserAPi.model.Person;
 import br.com.springboot.UserAPi.model.User;
 import br.com.springboot.UserAPi.repository.personRepository;
 import org.apache.coyote.Response;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,9 +25,13 @@ public class personController {
     }
 
     @PostMapping("/registerPerson")
-    public ResponseEntity<Person> postPerson(@RequestBody Person person) {
+    public ResponseEntity postPerson(@RequestBody Person person) {
 
-        personRepository.getPersonRepository().AddListPerson(person);
+
+        if(personRepository.getPersonRepository().AddListPerson(person) == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Cpf já existente !");
+        }
+
 
         return ResponseEntity.ok(person);
     }
