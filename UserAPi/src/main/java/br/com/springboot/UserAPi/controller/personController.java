@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/person")
 public class personController {
     @GetMapping("/listPerson")
     public ResponseEntity<List<Person>> getPerson() {
