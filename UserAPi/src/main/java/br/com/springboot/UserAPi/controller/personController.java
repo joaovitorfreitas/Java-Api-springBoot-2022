@@ -4,11 +4,14 @@ import br.com.springboot.UserAPi.dbInMemory.DbList;
 import br.com.springboot.UserAPi.model.Person;
 import br.com.springboot.UserAPi.model.User;
 import br.com.springboot.UserAPi.repository.personRepository;
+import org.apache.coyote.Response;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.websocket.server.PathParam;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/users")
@@ -20,11 +23,11 @@ public class personController {
     }
 
     @PostMapping("/registerPerson")
-    public Person postPerson(@RequestBody Person person) {
+    public ResponseEntity<Person> postPerson(@RequestBody Person person) {
 
         personRepository.AddLists.AddListPerson(person);
 
-        return person;
+        return ResponseEntity.ok(person);
     }
 
     @DeleteMapping("/removePerson/{id}")
@@ -38,14 +41,13 @@ public class personController {
     }
 
     @GetMapping("findPerson/{name}")
-    public static Person findPerson(@PathVariable String name) {
+    public static Stream<Person> findPerson(@PathVariable String name) {
 
         return personRepository.AddLists.findByName(name);
     }
 
     @GetMapping("findPersoncpf/{cpf}")
-    public static Person findPersoncpf(@PathVariable String cpf) {
-
+    public static Stream<Person> findPersoncpf(@PathVariable String cpf) {
         return personRepository.AddLists.findByCpf(cpf);
     }
 

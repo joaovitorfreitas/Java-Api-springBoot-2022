@@ -20,7 +20,7 @@ public class DbList {
 
     public static DbList getDbList(){
         if(dataList == null){
-            dataList = new DbList();
+           dataList = new DbList();
         }
         return dataList;
     }

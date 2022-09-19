@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class personRepository {
     private static List<Person> tempList;
@@ -16,11 +17,11 @@ public class personRepository {
     public static class AddLists {
 
 
-        private static Boolean checkCpf(String cpf){
+        private static Boolean checkCpf(String cpf) {
 
-            for(int i = 0; i < tempList.size(); i++){
+            for (int i = 0; i < tempList.size(); i++) {
 
-                if(Objects.equals(tempList.get(i).getCpf(), cpf)){
+                if (tempList.get(i).getCpf().equals(cpf)) {
                     return Boolean.TRUE;
                 }
             }
@@ -28,7 +29,7 @@ public class personRepository {
             return Boolean.FALSE;
         }
 
-        public static void AddListPerson(Person _person) {
+        public static Person AddListPerson(Person _person) {
 
             if (DbList.getDbList().getPersonList() == null && tempList == null) {
 
@@ -37,31 +38,30 @@ public class personRepository {
                 DbList.getDbList().setPersonList(new ArrayList<>());
             }
 
-            if(checkCpf(_person.getCpf())){
+            if (checkCpf(_person.getCpf())) {
 
                 System.out.println("Já tem");
-            }else{
 
-                System.out.println("Não tem");
+                return  null;
+            }
 
-
-                _person.setId(id ++);
+                _person.setId(id++);
 
                 tempList.add(_person);
 
                 DbList.getDbList().setPersonList(tempList);
-            }
+
+                return _person;
+
         }
 
-        public static boolean RemoveList(Integer idFind){
+        public static boolean RemoveList(Integer idFind) {
 
-            for(int i = 0; i < tempList.size(); i++){
+            for (int i = 0; i < tempList.size(); i++) {
 
-                if(tempList.get(i).getId() == idFind){
+                if (tempList.get(i).getId() == idFind) {
 
                     tempList.removeIf(person -> person.getId() == idFind);
-
-                    DbList.getDbList().setPersonList(tempList);
 
                     return Boolean.TRUE;
                 }
@@ -71,58 +71,37 @@ public class personRepository {
         }
 
 
-        public static Person findByName(String name) {
+        public static Stream<Person> findByName(String name) {
 
-            Person  _person =  new Person();
+            if(tempList.stream().filter(person -> person.getName().equalsIgnoreCase(name)).count() == 1){
+                return tempList.stream().filter(person -> person.getName().equalsIgnoreCase(name));
+            }
 
-            for(int i = 0; i < tempList.size(); i++){
+            return null;
+        }
 
-                if(tempList.get(i).getName().equalsIgnoreCase(name)){
 
-                    _person.setName(tempList.get(i).getName());
-                    _person.setId(tempList.get(i).getId());
-                    _person.setNumberHome(tempList.get(i).getNumberHome());
-                    _person.setComplement(tempList.get(i).getComplement());
-                    _person.setDistrict(tempList.get(i).getDistrict());
-                    _person.setCpf(tempList.get(i).getCpf());
-                    _person.setCounty(tempList.get(i).getCounty());
-                    _person.setUf(tempList.get(i).getUf());
-                    _person.setStreet(tempList.get(i).getStreet());
-                    _person.setRg(tempList.get(i).getRg());
+        public static Stream<Person> findByCpf(String cpf) {
 
-                    return _person;
+            if(tempList.stream().filter(person -> person.getCpf().contains(cpf)).count() == 1){
+                return tempList.stream().filter(person -> person.getCpf().contains(cpf));
+            }
+
+            return null;
+        }
+
+        public static Person updatePerson(Person _person, int id) {
+
+            for (int i = 0; i < tempList.size(); i++) {
+
+                if (tempList.get(i).getId() == id) {
+
                 }
-
             }
 
             return _person;
         }
 
-        public static Person findByCpf(String cpf) {
-
-            Person  _person =  new Person();
-
-            for(int i = 0; i < tempList.size(); i++){
-
-                if(tempList.get(i).getCpf().equalsIgnoreCase(cpf)){
-
-                    _person.setId(tempList.get(i).getId());
-                    _person.setNumberHome(tempList.get(i).getNumberHome());
-                    _person.setComplement(tempList.get(i).getComplement());
-                    _person.setDistrict(tempList.get(i).getDistrict());
-                    _person.setCpf(tempList.get(i).getCpf());
-                    _person.setCounty(tempList.get(i).getCounty());
-                    _person.setUf(tempList.get(i).getUf());
-                    _person.setStreet(tempList.get(i).getStreet());
-                    _person.setRg(tempList.get(i).getRg());
-
-                    return _person;
-                }
-
-            }
-
-            return _person;
-        }
 
     }
 }
