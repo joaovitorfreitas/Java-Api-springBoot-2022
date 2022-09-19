@@ -19,9 +19,9 @@ import java.util.stream.Stream;
 @RequestMapping("/users")
 public class personController {
     @GetMapping("/listPerson")
-    public List<Person> getPerson() {
+    public ResponseEntity<List<Person>> getPerson() {
 
-        return personRepository.getPersonRepository().getTempList();
+        return ResponseEntity.ok(personRepository.getPersonRepository().getTempList());
     }
 
     @PostMapping("/registerPerson")
@@ -56,19 +56,19 @@ public class personController {
     }
 
     @GetMapping("findPerson/{name}")
-    public Stream<Person> findPerson(@PathVariable String name) {
+    public ResponseEntity<Stream<Person>> findPerson(@PathVariable String name) {
 
-        return personRepository.getPersonRepository().findByName(name);
+        return ResponseEntity.ok(personRepository.getPersonRepository().findByName(name));
     }
 
     @GetMapping("findPersoncpf/{cpf}")
-    public Stream<Person> findPersoncpf(@PathVariable String cpf) {
-        return personRepository.getPersonRepository().findByCpf(cpf);
+    public ResponseEntity<Stream<Person>> findPersoncpf(@PathVariable String cpf) {
+        return ResponseEntity.ok(personRepository.getPersonRepository().findByCpf(cpf));
     }
 
     @GetMapping("findPersonid/{id}")
-    public Optional<Person> findPersonid(@PathVariable int id) {
-        return personRepository.getPersonRepository().findbyId(id);
+    public ResponseEntity<Optional<Person>> findPersonid(@PathVariable int id) {
+        return ResponseEntity.ok(personRepository.getPersonRepository().findbyId(id));
     }
 
     @PutMapping("putPerson/{id}")
