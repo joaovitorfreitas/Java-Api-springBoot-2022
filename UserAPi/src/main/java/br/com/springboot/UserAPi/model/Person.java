@@ -15,6 +15,8 @@ public class Person {
 
     private String Cpf;
 
+    private String Name;
+
     private String Street;
 
     private Integer numberHome;

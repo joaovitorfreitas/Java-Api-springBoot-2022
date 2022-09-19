@@ -37,4 +37,10 @@ import java.util.List;
         return "Não Encontrado";
         }
 
+        @GetMapping("findPerson/{name}")
+        public static Person findPerson(@PathVariable String name){
+
+        return personRepository.AddLists.findByName(name);
+        }
+
     }
