@@ -1,26 +1,25 @@
 package br.com.springboot.UserAPi.controller;
 
 
+import br.com.springboot.UserAPi.model.Error;
 import br.com.springboot.UserAPi.model.User;
 import br.com.springboot.UserAPi.repository.userRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.stream.Stream;
 
 @RequestMapping("/user")
 @RestController
 public class userController {
 
-    @PostMapping("/logIn")
-    public Stream<User> logIn(@RequestBody User _user){
-
-        return userRepository.getUserRepository().LoginUser(_user);
-    }
-
     @PostMapping("/RegisterUser")
-    public User registerUser(User _user){
+    public ResponseEntity registerUser(@RequestBody User _user){
 
-        return userRepository.getUserRepository().registerUser(_user);
+        if(userRepository.getUserRepository().registerUser(_user) != null){
+            return ResponseEntity.ok(_user);
+        }
+
+
+        return ResponseEntity.badRequest().body(new Error("Cpf já existente"));
     }
 
 }

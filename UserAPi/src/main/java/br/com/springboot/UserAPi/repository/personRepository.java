@@ -13,48 +13,30 @@ import java.util.stream.Stream;
 
 
 @Getter
-@NoArgsConstructor
 public class personRepository {
     private List<Person> tempList;
     private Integer id = 1;
-
-
-    //Lista
     private static personRepository _person;
 
+    private personRepository() {
+        tempList = new ArrayList<>();
+    }
 
     // Sigleton
     public static personRepository getPersonRepository() {
 
         if (_person == null) {
-
             _person = new personRepository();
         }
 
         return _person;
     }
 
-    //Metodos
-    private void checkNullList(){
-        if(tempList == null){
-            tempList = new ArrayList<>();
-        }
-    }
-
-
-
     private Boolean checkCpf(String cpf) {
-
-        if (tempList.stream().filter(person -> person.getCpf().equals(cpf)).count() == 1) {
-            return true;
-        }
-
-        return false;
+        return tempList.stream().filter(person -> person.getCpf().equals(cpf)).count() > 0;
     }
 
     public Person AddListPerson(Person _person) {
-
-        checkNullList();
 
         if (checkCpf(_person.getCpf())) {
 
@@ -70,20 +52,11 @@ public class personRepository {
     }
 
     public boolean RemoveList(Integer idFind) {
-        checkNullList();
-
         return tempList.removeIf(person -> person.getId() == idFind);
-
     }
 
 
     public Stream<Person> findByName(String name) {
-
-        checkNullList();
-
-        if (tempList.stream().filter(person -> person.getName().equalsIgnoreCase(name)).count() == 1) {
-            return tempList.stream().filter(person -> person.getName().equalsIgnoreCase(name));
-        }
 
         return tempList.stream().filter(person -> person.getName().equalsIgnoreCase(name));
     }
@@ -91,18 +64,10 @@ public class personRepository {
 
     public Stream<Person> findByCpf(String cpf) {
 
-        checkNullList();
-
-        if (tempList.stream().filter(person -> person.getCpf().contains(cpf)).count() == 1) {
-            return tempList.stream().filter(person -> person.getCpf().contains(cpf));
-        }
-
         return tempList.stream().filter(person -> person.getCpf().contains(cpf));
     }
 
     public Optional<Person> findbyId(int id) {
-
-        checkNullList();
 
         return tempList.stream().filter(person -> person.getId() == id).findFirst();
 
@@ -110,29 +75,29 @@ public class personRepository {
 
     public Person updatePerson(Person _person, int id) {
 
-        checkNullList();
+        Optional<Person> optPerson = findbyId(id);
 
-        if (findbyId(id) == null) {
-            return null;
+        if (optPerson.isEmpty()) {
+            throw new NullPointerException("Id não na url não encontrada");
         }
+
+        Person person = optPerson.get();
 
         if (_person.getId() == null) {
-            _person.setId(findbyId(id).get().getId());
-        }
-
-        else if (findbyId(id).get().getId() != _person.getId()) {
+            _person.setId(person.getId());
+        } else if (person.getId() != _person.getId()) {
             throw new IllegalArgumentException("Id não no corpo não valido");
         }
 
-        findbyId(id).get().setNumberHome(_person.getNumberHome());
-        findbyId(id).get().setName(_person.getName());
-        findbyId(id).get().setStreet(_person.getStreet());
-        findbyId(id).get().setComplement(_person.getComplement());
-        findbyId(id).get().setRg(_person.getRg());
-        findbyId(id).get().setUf(_person.getUf());
-        findbyId(id).get().setDistrict(_person.getDistrict());
-        findbyId(id).get().setCounty(_person.getCounty());
-        findbyId(id).get().setCpf(_person.getCpf());
+        person.setNumberHome(_person.getNumberHome());
+        person.setName(_person.getName());
+        person.setStreet(_person.getStreet());
+        person.setComplement(_person.getComplement());
+        person.setRg(_person.getRg());
+        person.setUf(_person.getUf());
+        person.setDistrict(_person.getDistrict());
+        person.setCounty(_person.getCounty());
+        person.setCpf(_person.getCpf());
 
         return _person;
     }
