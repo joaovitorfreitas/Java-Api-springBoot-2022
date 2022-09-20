@@ -56,11 +56,6 @@ public class personRepository {
 
         checkNullList();
 
-        if (tempList == null) {
-
-            tempList = new ArrayList<>();
-        }
-
         if (checkCpf(_person.getCpf())) {
 
             return null;

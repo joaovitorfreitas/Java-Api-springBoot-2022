@@ -12,7 +12,11 @@ import lombok.Setter;
 @AllArgsConstructor
 public class User {
 
+    private int id;
+
     private String Email;
 
     private String passWord;
+
+    private boolean administrator;
 }
