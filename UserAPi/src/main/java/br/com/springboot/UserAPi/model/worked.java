@@ -9,12 +9,11 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Workedd {
+public class worked {
 
     @Id
-    @Column(name = "IDD")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String workName;
+    private String workname;
 }

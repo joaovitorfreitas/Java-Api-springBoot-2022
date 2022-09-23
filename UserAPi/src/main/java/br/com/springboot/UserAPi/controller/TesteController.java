@@ -11,11 +11,15 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/teste")
 public class TesteController {
+    private final TesteRepository testeRepository;
+
+
+    @Autowired
+     TesteController(TesteRepository testeRepository){
+        this.testeRepository = testeRepository;
+    }
 
     //Injeção de dependencia
-    @Autowired
-    private TesteRepository testeRepository;
-
     @PostMapping("/postTeste")
     public Teste postBanco(@RequestBody Teste teste){
        return this.testeRepository.save(teste);
@@ -40,5 +44,4 @@ public class TesteController {
     public List<Teste> findByName(@PathVariable String name){
         return this.testeRepository.findByNameIgnoreCase(name);
     }
-
 }

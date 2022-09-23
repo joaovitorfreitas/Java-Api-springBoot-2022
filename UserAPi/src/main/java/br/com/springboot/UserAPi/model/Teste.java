@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.aspectj.weaver.ast.Test;
 
 import javax.persistence.*;
 
@@ -19,7 +20,7 @@ import javax.persistence.*;
 //Vai ser uma table pode passar um nome para tabela
 @Table
 public class Teste {
-
+    
     @Id
     //Id gerando automaticamente
     @GeneratedValue(strategy = GenerationType.AUTO)
